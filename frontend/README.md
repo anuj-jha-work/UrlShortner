@@ -20,7 +20,7 @@ A modern, responsive URL shortener application built with React, TypeScript, and
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS 4
 - **Routing**: React Router DOM
-- **State Management**: React Context API (Auth)
+- **State Management**: Redux Toolkit
 
 ## 📋 Prerequisites
 
@@ -136,8 +136,10 @@ frontend/
 - `authService.ts` - Authentication API calls (login, register, logout)
 - `urlService.ts` - URL API calls (create, fetch, etc.)
 
-### Contexts
-- `AuthContext.tsx` - Authentication state management
+### State Management (Redux)
+- `store/index.ts` - Redux store configuration
+- `store/slices/authSlice.ts` - Authentication state slice with async thunks
+- `store/hooks.ts` - Typed Redux hooks (useAppDispatch, useAppSelector)
 
 ## 🌟 Features in Detail
 
