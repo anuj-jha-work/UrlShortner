@@ -4,6 +4,8 @@ dotenv.config();
 const nanoidSize: number = Number(process.env.NANOID_SIZE);
 const port: number = Number(process.env.PORT);
 const mongoUri: string = String(process.env.MONGO_URI);
-const baseUrl: string = String(process.env.BASE_URL);
 const frontendUrl: string = String(process.env.FRONTEND_URL);
-export { nanoidSize, port, mongoUri, baseUrl, frontendUrl };
+const jwtSecret: string = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const jwtExpiresIn: string = process.env.JWT_EXPIRES_IN || '7d';
+
+export { nanoidSize, port, mongoUri,frontendUrl, jwtSecret, jwtExpiresIn };
