@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { store } from './store';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { initializeAuth } from './store/slices/authSlice';
 import { Header, Footer, Container } from './components';
 import { Home, DashboardPage, LoginPage, RegisterPage, MyUrlsPage } from './pages';
-import './App.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
 
   if (loading) {
     return (
@@ -25,12 +28,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 // Guest Route Component (redirect if authenticated)
 const GuestRoute = ({ children }: { children: React.ReactElement }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
 
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
       </div>
     );
   }
@@ -39,6 +42,12 @@ const GuestRoute = ({ children }: { children: React.ReactElement }) => {
 };
 
 const AppContent = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -83,11 +92,11 @@ const AppContent = () => {
 
 const App = () => {
   return (
-    <Router>
-      <AuthProvider>
+    <Provider store={store}>
+      <Router>
         <AppContent />
-      </AuthProvider>
-    </Router>
+      </Router>
+    </Provider>
   );
 };
 

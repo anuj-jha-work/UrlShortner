@@ -1,38 +1,38 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loginUser, clearError } from '../../store/slices/authSlice';
 import Button from '../Button';
 import Logo from '../Logo';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [localError, setLocalError] = useState('');
   
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setLocalError('');
+    dispatch(clearError());
 
     if (!email || !password) {
-      setError('All fields are required');
+      setLocalError('All fields are required');
       return;
     }
 
-    setLoading(true);
-
     try {
-      await login(email, password);
+      await dispatch(loginUser({ email, password })).unwrap();
       navigate('/');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
-    } finally {
-      setLoading(false);
+      // Error is already set in Redux state
     }
   };
+
+  const displayError = localError || error;
 
   return (
     <div className="flex items-center justify-center py-8 px-4">
@@ -55,9 +55,9 @@ const Login = () => {
           </Link>
         </p>
 
-        {error && (
+        {displayError && (
           <div className="mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
+            {displayError}
           </div>
         )}
 

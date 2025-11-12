@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, UrlShortener } from '../components';
+import { UrlShortener } from '../components';
 
 const Home = () => {
   const [, setRefreshKey] = useState(0);

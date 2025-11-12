@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logoutUser } from '../../store/slices/authSlice';
 import Container from '../Container/Container';
 import Logo from '../Logo';
 import Button from '../Button';
@@ -8,7 +9,8 @@ import Button from '../Button';
 interface HeaderProps {}
 
 const Header = ({}: HeaderProps) => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -23,6 +25,11 @@ const Header = ({}: HeaderProps) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setIsDropdownOpen(false);
+  };
 
   return (
     <header className="py-4 shadow-lg bg-white border-b border-gray-200 sticky top-0 z-50 transition-all duration-300">
@@ -89,10 +96,7 @@ const Header = ({}: HeaderProps) => {
                         </p>
                       </div>
                       <button
-                        onClick={() => {
-                          logout();
-                          setIsDropdownOpen(false);
-                        }}
+                        onClick={handleLogout}
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2"
                       >
                         <svg
