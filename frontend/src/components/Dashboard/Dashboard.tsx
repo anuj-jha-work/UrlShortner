@@ -124,7 +124,7 @@ const Dashboard = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-800 font-mono">
+                    <div className="text-sm max-w-60 truncate text-gray-800 font-mono">
                       {constants.backendUrl + '/' + url.shortId}
                     </div>
                   </td>
