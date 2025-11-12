@@ -11,17 +11,14 @@ interface UrlParams {
 }
 
 
-router.route("/api/create")
+router.route("/create")
 .post(optionalAuth, wrapAsync(createUrlController));
 
-router.route("/api/urls")
+router.route("/urls")
 .get(wrapAsync(getAllUrlsController));
 
-router.route("/api/my-urls")
+router.route("/my-urls")
 .get(authenticate, wrapAsync(getMyUrlsController));
-
-router.route("/:shortId")
-.get(wrapAsync(redirectUrlController));
 
 
 
