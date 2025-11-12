@@ -1,8 +1,10 @@
 const env = import.meta.env;
 
+const backendUrl = String(env.VITE_BACKEND_URL || 'http://localhost:3000');
+
 const constants = {
-    backendUrl: String(env.VITE_BACKEND_URL || 'http://localhost:3000'),
-    apiUrl: String(env.VITE_API_URL || 'http://localhost:3000/api'),
+    backendUrl: backendUrl,
+    apiUrl: `${backendUrl}/api`,
 }
 
 export default constants;
