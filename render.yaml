@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: url-shortener-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci && npm run build:cache
+    startCommand: npm start
+    healthCheckPath: /api/urls
+    envVars:
+      - key: NANOID_SIZE
+        value: 10
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: MONGO_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+  - type: static
+    name: url-shortener-frontend
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

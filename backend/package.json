@@ -23,7 +23,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "build:cache": "g++ -std=c++17 -O2 -o cache/lru_cache.exe cpp/lru_cache.cpp",
+    "build:cache": "node scripts/build_cache.mjs",
     "build:all": "npm run build:cache",
     "start": "node src/server.js",
     "dev": "nodemon --watch src --ext js --exec node src/server.js"
