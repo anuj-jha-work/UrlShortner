@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: url-shortener-backend
+    name: url.shortener
     runtime: node
     rootDir: backend
     plan: free
@@ -20,7 +20,7 @@ services:
         sync: false
 
   - type: static
-    name: url-shortener-frontend
+    name: urlshortener
     rootDir: frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
