@@ -92,23 +92,6 @@ https://urlshort-afo0.onrender.com/DSDZ6U13Xr
    http://localhost:3000
    ```
 
----
-
-## 📷 Demo
-
-(Add screenshots or GIFs here)
-
----
-
-## ⚠️ Limitations
-
-* No authentication system
-* No link expiration feature
-* Basic UI
-* Not designed for high-scale production
-
----
-
 ## 🔮 Future Improvements
 
 * Add user authentication
